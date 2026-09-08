@@ -1,0 +1,6 @@
+{
+  "name": "HabitOS CLI & Task Tracker",
+  "description": "Terminal-driven task and habit management system with dynamic serial numbering, graphical progress analytics, and multi-user support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

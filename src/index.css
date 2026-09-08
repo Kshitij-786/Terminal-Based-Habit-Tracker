@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #0A0B0D;
+    color: #E0E0E0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Custom scrollbar for terminal & lists */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0F1014;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2A2B2F;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #38BDF8;
+  }
+}
+
+.term-text { color: #A0A0A0; }
+.cmd-accent { color: #4ADE80; }
+.id-tag { color: #60A5FA; font-weight: bold; }
+.habit-tag { color: #F472B6; }
+
+#terminal-cli-input {
+  caret-color: #38BDF8;
+}
+
+#terminal-cli-input::selection {
+  background-color: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
