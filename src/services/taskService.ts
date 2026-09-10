@@ -9,13 +9,13 @@ export const taskService = {
    */
   async fetchTasks(): Promise<ServiceResult<Task[]>> {
     if (!isSupabaseConfigured()) {
-      return { data: null, error: 'Supabase client is not configured.' };
+      return { data: null, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: null, error: 'Unauthenticated: No active Supabase session.' };
+        return { data: null, error: 'Unauthenticated: No active database session.' };
       }
 
       const { data, error } = await supabase
@@ -40,13 +40,13 @@ export const taskService = {
    */
   async createTask(task: Task): Promise<ServiceResult<Task>> {
     if (!isSupabaseConfigured()) {
-      return { data: null, error: 'Supabase client is not configured.' };
+      return { data: null, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: null, error: 'Unauthenticated: Cannot create task without active Supabase session.' };
+        return { data: null, error: 'Unauthenticated: Cannot create task without active database session.' };
       }
 
       const dbPayload = mapTaskToDbTask(task, user.id);
@@ -72,13 +72,13 @@ export const taskService = {
    */
   async updateTask(taskId: string, updates: Partial<Task>): Promise<ServiceResult<Task>> {
     if (!isSupabaseConfigured()) {
-      return { data: null, error: 'Supabase client is not configured.' };
+      return { data: null, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: null, error: 'Unauthenticated: Cannot update task without active Supabase session.' };
+        return { data: null, error: 'Unauthenticated: Cannot update task without active database session.' };
       }
 
       const dbUpdates: Partial<DbTask> = {};
@@ -112,13 +112,13 @@ export const taskService = {
    */
   async deleteTask(taskId: string): Promise<ServiceResult<boolean>> {
     if (!isSupabaseConfigured()) {
-      return { data: false, error: 'Supabase client is not configured.' };
+      return { data: false, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: false, error: 'Unauthenticated: Cannot delete task without active Supabase session.' };
+        return { data: false, error: 'Unauthenticated: Cannot delete task without active database session.' };
       }
 
       const { error } = await supabase
@@ -142,13 +142,13 @@ export const taskService = {
    */
   async batchSyncTasks(tasks: Task[]): Promise<ServiceResult<number>> {
     if (!isSupabaseConfigured()) {
-      return { data: 0, error: 'Supabase client is not configured.' };
+      return { data: 0, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: 0, error: 'Unauthenticated: Cannot sync tasks without active Supabase session.' };
+        return { data: 0, error: 'Unauthenticated: Cannot sync tasks without active database session.' };
       }
 
       if (tasks.length === 0) {

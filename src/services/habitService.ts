@@ -12,13 +12,13 @@ export const habitService = {
    */
   async fetchHabits(): Promise<ServiceResult<Habit[]>> {
     if (!isSupabaseConfigured()) {
-      return { data: null, error: 'Supabase client is not configured.' };
+      return { data: null, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: null, error: 'Unauthenticated: No active Supabase session.' };
+        return { data: null, error: 'Unauthenticated: No active database session.' };
       }
 
       const { data: dbHabits, error: habitsError } = await supabase
@@ -77,13 +77,13 @@ export const habitService = {
    */
   async createHabit(name: string, customId?: string): Promise<ServiceResult<Habit>> {
     if (!isSupabaseConfigured()) {
-      return { data: null, error: 'Supabase client is not configured.' };
+      return { data: null, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: null, error: 'Unauthenticated: Cannot create habit without active Supabase session.' };
+        return { data: null, error: 'Unauthenticated: Cannot create habit without active database session.' };
       }
 
       const id = customId || generateUUID();
@@ -127,13 +127,13 @@ export const habitService = {
    */
   async renameHabit(habitId: string, newName: string): Promise<ServiceResult<boolean>> {
     if (!isSupabaseConfigured()) {
-      return { data: false, error: 'Supabase client is not configured.' };
+      return { data: false, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: false, error: 'Unauthenticated: Cannot rename habit without active Supabase session.' };
+        return { data: false, error: 'Unauthenticated: Cannot rename habit without active database session.' };
       }
 
       const { error } = await supabase
@@ -160,13 +160,13 @@ export const habitService = {
    */
   async deleteHabit(habitId: string): Promise<ServiceResult<boolean>> {
     if (!isSupabaseConfigured()) {
-      return { data: false, error: 'Supabase client is not configured.' };
+      return { data: false, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: false, error: 'Unauthenticated: Cannot delete habit without active Supabase session.' };
+        return { data: false, error: 'Unauthenticated: Cannot delete habit without active database session.' };
       }
 
       // Delete habit completions first in case cascade is not defined
@@ -204,13 +204,13 @@ export const habitService = {
    */
   async batchSyncHabits(habits: Habit[]): Promise<ServiceResult<number>> {
     if (!isSupabaseConfigured()) {
-      return { data: 0, error: 'Supabase client is not configured.' };
+      return { data: 0, error: 'Database service is not configured.' };
     }
 
     try {
       const { data: { user }, error: authErr } = await supabase.auth.getUser();
       if (authErr || !user) {
-        return { data: 0, error: 'Unauthenticated: Cannot sync habits without active Supabase session.' };
+        return { data: 0, error: 'Unauthenticated: Cannot sync habits without active database session.' };
       }
 
       if (habits.length === 0) {

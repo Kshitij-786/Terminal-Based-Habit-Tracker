@@ -456,13 +456,13 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
         return;
       }
 
-      // Supabase registration integration
+      // Database registration integration
       if (!authService.isConfigured()) {
         const errEntry: TerminalEntry = {
           id: `out-${Date.now()}`,
           type: 'output',
           outputType: 'error',
-          content: `Create account? [y/n]: y\nERROR: Supabase client is not configured.`,
+          content: `Create account? [y/n]: y\nERROR: Database service is not configured.`,
           timestamp: new Date().toLocaleTimeString(),
         };
         setEntries((prev) => [...prev, errEntry]);
@@ -535,7 +535,7 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
         id: `out-${Date.now()}`,
         type: 'output',
         outputType: 'success',
-        content: `Create account? [y/n]: y\n\nUSER CREATED SUCCESSFULLY\n\nUser ID          : ${displayUserId}\nDatabase Info    : Supabase profile provisioned in PostgreSQL\n\nYou can now log in.`,
+        content: `Create account? [y/n]: y\n\nUSER CREATED SUCCESSFULLY\n\nUser ID          : ${displayUserId}\nDatabase Info    : User profile provisioned in PostgreSQL Database\n\nYou can now log in.`,
         timestamp: new Date().toLocaleTimeString(),
       };
       setEntries((prev) => [...prev, successEntry]);
@@ -582,7 +582,7 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
           id: `out-${Date.now()}`,
           type: 'output',
           outputType: 'error',
-          content: `Password: ********\nERROR: Supabase client is not configured.`,
+          content: `Password: ********\nERROR: Database service is not configured.`,
           timestamp: new Date().toLocaleTimeString(),
         };
         setEntries((prev) => [...prev, errEntry]);
@@ -612,7 +612,7 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
           supaUser.user_metadata?.display_name ||
           flowUserId.trim();
 
-        // Fetch database tasks & habits with active Supabase session
+        // Fetch database tasks & habits with active database session
         let initialTasks: Task[] = [];
         let initialHabits: Habit[] = [];
         try {
@@ -627,7 +627,7 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
             initialHabits = dbHabits.data;
           }
         } catch (e) {
-          console.warn('Error loading Supabase data after login:', e);
+          console.warn('Error loading database data after login:', e);
         }
 
         const userState: UserState = {
@@ -642,7 +642,7 @@ export const TerminalWindow: React.FC<TerminalWindowProps> = ({
           id: `out-${Date.now()}`,
           type: 'output',
           outputType: 'success',
-          content: `Password: ********\n\nAuthentication successful.\nDatabase Status  : Connected to Supabase PostgreSQL\n\nLoading user environment...\n\nWelcome, ${displayUserId}.`,
+          content: `Password: ********\n\nAuthentication successful.\nDatabase Status  : Connected to PostgreSQL Database\n\nLoading user environment...\n\nWelcome, ${displayUserId}.`,
           timestamp: new Date().toLocaleTimeString(),
         };
         setEntries((prev) => [...prev, successEntry]);

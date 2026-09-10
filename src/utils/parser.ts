@@ -241,16 +241,16 @@ SUPPORTED DATE FORMATS:
     }
     const dbReport = `DATABASE & BACKEND INTEGRATION
 ────────────────────────────────────────
-Database Engine  : Supabase (PostgreSQL)
+Database Engine  : PostgreSQL Database
 Project Host     : ${projectHost}
 Client State     : ${configured ? 'Initialized & Active' : 'Not configured'}
-Data Source      : Supabase PostgreSQL (sole persistent source of truth)
+Data Source      : PostgreSQL Database (sole persistent source of truth)
 Schema Tables    : profiles, tasks, habits, habit_completions
 Row Level Sec.   : Enforced (RLS active on all 4 tables)
-Auth Provider    : Supabase Auth (Active session-based authentication)
-Auth Pipeline    : CLI User ID → Supabase Auth → profiles
-Current Mode     : Supabase Production Mode
-Authentication   : Active Supabase session (mock/localStorage disabled)
+Auth Provider    : Database Auth (Active session-based authentication)
+Auth Pipeline    : CLI User ID → Database Auth → profiles
+Current Mode     : Production Mode
+Authentication   : Active Database session (mock/localStorage disabled)
 ────────────────────────────────────────`;
     return {
       message: dbReport,
@@ -424,7 +424,7 @@ Authentication   : Active Supabase session (mock/localStorage disabled)
 
 User ID          : ${currentUser.userName || currentUser.userId}
 Account Status   : ACTIVE
-Storage Backend  : Supabase PostgreSQL (Authoritative Single Source of Truth)
+Storage Backend  : PostgreSQL Database (Authoritative Single Source of Truth)
 
 Habits           : ${habitsTodayDone} / ${habitsTotal}
 Total Tasks      : ${tasksTotal}
@@ -459,18 +459,18 @@ Longest Streak   : ${longestStreak} days
     };
   }
 
-  // Ensure active Supabase session before DB operations (Requirements 6 & 7)
+  // Ensure active database session before DB operations (Requirements 6 & 7)
   if (isSupabaseConfigured()) {
     const session = await authService.getSession();
     if (!session || !session.user) {
       if (baseCmd === 'add') {
         return {
-          message: `ERROR: Unauthenticated: Cannot create task without active Supabase session.`,
+          message: `ERROR: Unauthenticated: Cannot create task without active database session.`,
           outputType: 'error',
         };
       }
       return {
-        message: `ERROR: Unauthenticated: No active Supabase session.\nTIP: Type 'login' to sign in or 'create user' to register.`,
+        message: `ERROR: Unauthenticated: No active database session.\nTIP: Type 'login' to sign in or 'create user' to register.`,
         outputType: 'error',
       };
     }
@@ -1245,12 +1245,12 @@ Longest Streak   : ${longestStreak} days
       createdAt: new Date().toISOString(),
     };
 
-    // Persist to Supabase database (ensure session is available first)
+    // Persist to database (ensure session is available first)
     if (isSupabaseConfigured()) {
       const session = await authService.getSession();
       if (!session || !session.user) {
         return {
-          message: `ERROR: Unauthenticated: Cannot create task without active Supabase session.`,
+          message: `ERROR: Unauthenticated: Cannot create task without active database session.`,
           outputType: 'error',
           activeView: 'tasks',
         };

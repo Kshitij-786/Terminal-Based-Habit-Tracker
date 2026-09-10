@@ -138,22 +138,28 @@ export const adminService = {
       // Handled by completion fallback
     }
 
-    if (rpcData && typeof rpcData === 'object') {
-      const currentStreak = Number(rpcData.current_streak ?? rpcData.currentStreak ?? 0);
+    // The RPC returns TABLE data, which Supabase returns as an array of rows.
+    // Correctly handle data[0] if array, or the object directly if single record.
+    const row = Array.isArray(rpcData)
+      ? (rpcData.length > 0 ? rpcData[0] : null)
+      : (rpcData && typeof rpcData === 'object' ? rpcData : null);
+
+    if (row && typeof row === 'object') {
+      const currentStreak = Number(row.current_streak ?? row.currentStreak ?? 0);
       const longestStreak = Number(
-        rpcData.longest_streak ?? rpcData.longestStreak ?? rpcData.best_streak ?? 0
+        row.longest_streak ?? row.longestStreak ?? row.best_streak ?? row.bestStreak ?? 0
       );
       const totalCheckins = Number(
-        rpcData.total_checkins ?? rpcData.totalCheckins ?? completions?.length ?? 0
+        row.total_checkins ?? row.totalCheckins ?? row.total_completions ?? completions?.length ?? 0
       );
-      const completionRate = Number(rpcData.completion_rate ?? rpcData.completionRate ?? 0);
+      const completionRate = Number(row.completion_rate ?? row.completionRate ?? 0);
 
       return {
         data: {
-          currentStreak,
-          longestStreak,
-          totalCheckins,
-          completionRate,
+          currentStreak: isNaN(currentStreak) ? 0 : currentStreak,
+          longestStreak: isNaN(longestStreak) ? 0 : longestStreak,
+          totalCheckins: isNaN(totalCheckins) ? 0 : totalCheckins,
+          completionRate: isNaN(completionRate) ? 0 : completionRate,
         },
         error: null,
       };

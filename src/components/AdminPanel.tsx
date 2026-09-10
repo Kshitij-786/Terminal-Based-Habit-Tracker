@@ -326,7 +326,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExit, currentAdminUser
             {errorMessage || 'You do not have administrator privileges to access this console.'}
           </p>
           <div className="text-xs text-[#6B7280] mb-6">
-            Authentication verified via Supabase public.is_admin() RPC.
+            Authentication verified via Database public.is_admin() RPC.
           </div>
           <button
             onClick={onExit}
@@ -520,7 +520,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExit, currentAdminUser
         {isLoading && (
           <div className="flex items-center gap-2 text-xs text-[#38BDF8] py-4">
             <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-ping"></span>
-            <span>Executing Supabase PostgreSQL RPC query...</span>
+            <span>Executing PostgreSQL Database RPC query...</span>
           </div>
         )}
 

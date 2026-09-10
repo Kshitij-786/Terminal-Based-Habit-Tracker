@@ -25,7 +25,7 @@ export const dataAdapter = {
         hasActiveSupabaseSession: false,
         supabaseUserId: null,
         mode: 'local_fallback',
-        message: 'Supabase credentials not configured.',
+        message: 'Database credentials not configured.',
       };
     }
 
@@ -37,7 +37,7 @@ export const dataAdapter = {
           hasActiveSupabaseSession: true,
           supabaseUserId: user.id,
           mode: 'supabase',
-          message: `Connected to Supabase PostgreSQL (User: ${user.id.slice(0, 8)}...).`,
+          message: `Connected to PostgreSQL Database (User: ${user.id.slice(0, 8)}...).`,
         };
       }
     } catch {
@@ -49,7 +49,7 @@ export const dataAdapter = {
       hasActiveSupabaseSession: false,
       supabaseUserId: null,
       mode: 'local_fallback',
-      message: 'Supabase configured. Awaiting active Supabase Auth session.',
+      message: 'Database configured. Awaiting active authentication session.',
     };
   },
 
